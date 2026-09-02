@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+
+    - uses: BlazeSnow/release-skill-action@main
+      with:
+        skill-name: Time
+        skill-lower-name: time
+        base-dir: .
+        release-name: ${{ github.ref_name }}
+        release-body: https://github.com/BlazeSnowSkill/Time/blob/main/CHANGELOG.md
+        prerelease: ${{ contains(github.ref_name, '-') }}
+        tag: ${{ github.ref_name }}
