@@ -43,7 +43,7 @@ Unix 时间戳：1788032730（秒）/ 1788032730123（毫秒）
 
 ## 开发
 
-见 [DEVELOPMENT.md](DEVELOPMENT.md)。
+见 [DEVELOPMENT.md](DEVELOPMENT.md)；常见问题（网络校时失败、时区报错、时钟偏差、编码乱码）见 [references/](references/) 下的排障指南。
 
 ## 发布
 

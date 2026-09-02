@@ -12,6 +12,11 @@ Time/
 ├── SKILL.md            # skill 入口：frontmatter + Agent 使用指引（发布必需）
 ├── scripts/
 │   └── get_time.py     # 获取准确时间的主脚本
+├── references/         # 排障指南（随包发布，按需阅读）
+│   ├── troubleshooting-network.md
+│   ├── troubleshooting-timezone.md
+│   ├── troubleshooting-clock.md
+│   └── troubleshooting-python.md
 ├── README.md           # 项目介绍
 ├── CHANGELOG.md        # 更新日志
 ├── VERSION             # 当前版本号（发布时读取第一行）
@@ -46,7 +51,7 @@ Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 
 1. 更新 `VERSION`（如 `v2026.9.2.0`）与 `CHANGELOG.md`。
 2. 合并至 `main`，运行 `powershell -File tag.ps1` 创建并推送 `v*` 标签。
-3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`.github/`、`tag.ps1` 等不会进入发布包。
+3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`references/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`.github/`、`tag.ps1` 等不会进入发布包。
 
 ## 其他约定
 

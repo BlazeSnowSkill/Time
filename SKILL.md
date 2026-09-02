@@ -52,6 +52,17 @@ Unix 时间戳：1788032730（秒）/ 1788032730123（毫秒）
 4. 输出出现 `警告：本地时钟偏差…` 时，说明设备时钟不准，必须采用脚本给出的网络时间，并可提醒用户校准系统时钟。
 5. 网络不可用自动回退不算错误；但 `source` 为 `local_clock` 时不得声称时间经过校准。
 
+## 排障
+
+遇到异常先看输出与退出码，再按类别读取 `references/` 下对应的指南：
+
+| 症状 | 指南 |
+|---|---|
+| 时间来源回退为本地时钟、NTP/HTTP 校时失败 | `references/troubleshooting-network.md` |
+| 时区报错、时区名不识别 | `references/troubleshooting-timezone.md` |
+| 出现"本地时钟偏差"警告 | `references/troubleshooting-clock.md` |
+| `python` 命令找不到、版本过低、中文乱码 | `references/troubleshooting-python.md` |
+
 ## 环境要求
 
 1. Python 3.9+，仅标准库，无第三方依赖。
