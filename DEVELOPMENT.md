@@ -5,7 +5,8 @@
 1. Python 3.9+（skill 运行时仅用标准库，无第三方依赖）
 2. Git
 3. black（Python 代码格式化，默认 88 列）：提交前运行 `black scripts/ tests/`
-4. pytest（仅测试用）：`pip install pytest`
+4. shfmt（shell 脚本格式化，默认风格）：`*.sh` 改动后运行 `shfmt -w scripts/get_time.sh`
+5. pytest（仅测试用）：`pip install pytest`
 
 ## 目录结构
 
