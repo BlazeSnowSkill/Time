@@ -12,7 +12,7 @@ description: 获取准确的当前时间、日期、星期与 Unix 时间戳，�
 回答"现在几点 / 今天日期 / 星期几 / Unix 秒级时间戳"时使用，零依赖：
 
 ```bash
-# Linux / macOS / Git Bash（含 Windows 下的 ZCode 默认 shell）
+# Linux / macOS / Windows（Git Bash）
 sh scripts/get_time.sh
 ```
 
