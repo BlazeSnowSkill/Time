@@ -12,11 +12,12 @@ Time/
 ├── SKILL.md            # skill 入口：frontmatter + Agent 使用指引（发布必需）
 ├── scripts/
 │   └── get_time.py     # 获取准确时间的主脚本
-├── references/         # 排障指南（随包发布，按需阅读）
-│   ├── troubleshooting-network.md
-│   ├── troubleshooting-timezone.md
-│   ├── troubleshooting-clock.md
-│   └── troubleshooting-python.md
+├── references/         # 参考文档（随包发布，按需阅读）
+│   └── troubleshooting/
+│       ├── network.md
+│       ├── timezone.md
+│       ├── clock.md
+│       └── python.md
 ├── README.md           # 项目介绍
 ├── CHANGELOG.md        # 更新日志
 ├── VERSION             # 当前版本号（发布时读取第一行）

@@ -58,10 +58,10 @@ Unix 时间戳：1788032730（秒）/ 1788032730123（毫秒）
 
 | 症状 | 指南 |
 |---|---|
-| 时间来源回退为本地时钟、NTP/HTTP 校时失败 | `references/troubleshooting-network.md` |
-| 时区报错、时区名不识别 | `references/troubleshooting-timezone.md` |
-| 出现"本地时钟偏差"警告 | `references/troubleshooting-clock.md` |
-| `python` 命令找不到、版本过低、中文乱码 | `references/troubleshooting-python.md` |
+| 时间来源回退为本地时钟、NTP/HTTP 校时失败 | `references/troubleshooting/network.md` |
+| 时区报错、时区名不识别 | `references/troubleshooting/timezone.md` |
+| 出现"本地时钟偏差"警告 | `references/troubleshooting/clock.md` |
+| `python` 命令找不到、版本过低、中文乱码 | `references/troubleshooting/python.md` |
 
 ## 环境要求
 

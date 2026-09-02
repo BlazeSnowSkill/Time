@@ -20,4 +20,4 @@ Python 版本低于 3.9。用 `python --version` 确认后升级，skill 要求 
 ## 依赖说明
 
 1. 校时功能零第三方依赖，仅标准库。
-2. 唯一例外：Windows 上使用 `--timezone` 需要 `pip install tzdata`，详见时区排障指南。
+2. 唯一例外：Windows 上使用 `--timezone` 需要 `pip install tzdata`，详见 [timezone.md](timezone.md)。
