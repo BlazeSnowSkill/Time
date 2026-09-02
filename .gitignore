@@ -3,3 +3,6 @@ dist/
 
 # Python 缓存
 __pycache__/
+
+# pytest
+.pytest_cache/

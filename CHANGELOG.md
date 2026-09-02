@@ -7,3 +7,4 @@
 3. 支持 `--timezone` 指定 IANA 时区、`--json` 结构化输出、`--local-only` 本地模式、`--debug` 调试
 4. 新增 `references/` 排障指南：网络校时、时区、时钟偏差、Python 环境与编码
 5. 重构：脚本按职责拆分为 `scripts/timelib/` 包（校时源、时区、渲染、输出编码），CLI 入口与命令行参数保持不变
+6. 新增 `tests/` 单元测试（pytest，仅开发依赖、不随包发布）：格式化、时区、校时源（网络逻辑离线 mock）、CLI 集成

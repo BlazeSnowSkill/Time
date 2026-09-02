@@ -2,9 +2,10 @@
 
 ## 环境要求
 
-1. Python 3.9+（脚本仅用标准库，无第三方依赖）
+1. Python 3.9+（skill 运行时仅用标准库，无第三方依赖）
 2. Git
-3. black（Python 代码格式化，默认 88 列）：提交前运行 `black scripts/`
+3. black（Python 代码格式化，默认 88 列）：提交前运行 `black scripts/ tests/`
+4. pytest（仅测试用）：`pip install pytest`
 
 ## 目录结构
 
@@ -25,6 +26,12 @@ Time/
 │       ├── timezone.md
 │       ├── clock.md
 │       └── python.md
+├── tests/              # 单元测试（不随包发布，可用非标准库）
+│   ├── conftest.py        # 导入路径：把 scripts/ 加入 sys.path
+│   ├── test_formatting.py
+│   ├── test_timezones.py
+│   ├── test_sources.py
+│   └── test_cli.py
 ├── README.md           # 项目介绍
 ├── CHANGELOG.md        # 更新日志
 ├── VERSION             # 当前版本号（发布时读取第一行）
@@ -43,6 +50,16 @@ Time/
 
 ## 本地测试
 
+### 单元测试
+
+```bash
+python -m pytest tests/ -v
+```
+
+`tests/` 不随包发布（白名单不含该目录），因此测试可用 pytest 等非标准库。除一条对在线/离线都宽容的 CLI 集成用例外，网络逻辑全部 mock，离线可跑。
+
+### 手动验证
+
 ```bash
 python scripts/get_time.py                  # 网络校时 + 本地时区
 python scripts/get_time.py --json           # JSON 输出
@@ -59,7 +76,7 @@ Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 
 1. 更新 `VERSION`（如 `v2026.9.2.0`）与 `CHANGELOG.md`。
 2. 合并至 `main`，运行 `powershell -File tag.ps1` 创建并推送 `v*` 标签。
-3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`references/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`.github/`、`tag.ps1` 等不会进入发布包。
+3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`references/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`.github/`、`tag.ps1`、`tests/` 等不会进入发布包。
 
 ## 其他约定
 
