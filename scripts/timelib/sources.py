@@ -58,7 +58,9 @@ def _ntp_to_unix(raw: bytes) -> float:
 
 def http_offset(url: str, timeout: float) -> float:
     """用 HTTP 响应头 Date 校时，返回偏移秒数。精度受 Date 秒级分辨率限制。"""
-    request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "time-skill"})
+    request = urllib.request.Request(
+        url, method="HEAD", headers={"User-Agent": "time-skill"}
+    )
     start = time.time()
     with urllib.request.urlopen(request, timeout=timeout) as response:
         date_header = response.headers.get("Date")

@@ -4,6 +4,7 @@
 
 1. Python 3.9+（脚本仅用标准库，无第三方依赖）
 2. Git
+3. black（Python 代码格式化，默认 88 列）：提交前运行 `black scripts/`
 
 ## 目录结构
 

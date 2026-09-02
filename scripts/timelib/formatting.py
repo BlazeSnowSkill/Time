@@ -22,7 +22,9 @@ def format_utc_offset(delta) -> str:
     return f"{sign}{hours:02d}:{minutes:02d}"
 
 
-def build_result(now_ts: float, tz, source: str, server, local_clock_offset, fallback_reason=None) -> dict:
+def build_result(
+    now_ts: float, tz, source: str, server, local_clock_offset, fallback_reason=None
+) -> dict:
     """以指定时区渲染时间数据，输出字段同时服务文本与 JSON 两种形式。"""
     dt = datetime.fromtimestamp(now_ts, tz)
     utc = dt.astimezone(dt_timezone.utc)
@@ -43,8 +45,14 @@ def build_result(now_ts: float, tz, source: str, server, local_clock_offset, fal
         "unix_seconds": int(now_ts),
         "unix_milliseconds": int(now_ts * 1000),
         "utc": utc.isoformat(),
-        "local_clock_offset_seconds": None if local_clock_offset is None else round(local_clock_offset, 3),
-        "clock_accurate": None if local_clock_offset is None else abs(local_clock_offset) <= CLOCK_WARNING_SECONDS,
+        "local_clock_offset_seconds": (
+            None if local_clock_offset is None else round(local_clock_offset, 3)
+        ),
+        "clock_accurate": (
+            None
+            if local_clock_offset is None
+            else abs(local_clock_offset) <= CLOCK_WARNING_SECONDS
+        ),
     }
 
 
@@ -57,12 +65,20 @@ def render_text(result: dict) -> str:
         f"Unix 时间戳：{result['unix_seconds']}（秒）/ {result['unix_milliseconds']}（毫秒）",
     ]
     if result["source"] == "local_clock":
-        note = "未联网校时" if result["fallback_reason"] == "local_only" else "网络校时失败，未经校准"
+        note = (
+            "未联网校时"
+            if result["fallback_reason"] == "local_only"
+            else "网络校时失败，未经校准"
+        )
         lines.append(f"时间来源：本地时钟（{note}）")
     else:
         offset = result["local_clock_offset_seconds"]
         label = "NTP" if result["source"] == "ntp" else "HTTP Date"
-        lines.append(f"时间来源：{label}（{result['server']}），与本地时钟偏差 {offset:+.3f} 秒")
+        lines.append(
+            f"时间来源：{label}（{result['server']}），与本地时钟偏差 {offset:+.3f} 秒"
+        )
         if not result["clock_accurate"]:
-            lines.append(f"警告：本地时钟偏差 {offset:+.3f} 秒，请以上述网络时间为准，并考虑校准系统时钟。")
+            lines.append(
+                f"警告：本地时钟偏差 {offset:+.3f} 秒，请以上述网络时间为准，并考虑校准系统时钟。"
+            )
     return "\n".join(lines)

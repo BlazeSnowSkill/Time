@@ -28,5 +28,9 @@ def resolve_timezone(name: str):
     try:
         return ZoneInfo(name.strip())
     except Exception:
-        hint = "，Windows 下请先安装时区数据库：pip install tzdata" if sys.platform == "win32" else ""
+        hint = (
+            "，Windows 下请先安装时区数据库：pip install tzdata"
+            if sys.platform == "win32"
+            else ""
+        )
         raise TimezoneError(f"未知时区：{name}{hint}") from None
