@@ -1,5 +1,13 @@
 # 更新日志
 
+## v2026.9.2-beta.2
+
+1. 新增快速路径：系统原生 `date` / `Get-Date` 命令直接获取本地时间，毫秒级、零依赖
+   - `scripts/get_time.sh`（POSIX，Linux / macOS / Git Bash 通用）
+   - `scripts/get_time.ps1`（Windows PowerShell，UTF-8 BOM 规避 GBK 乱码）
+2. Python 脚本调整为精确路径：NTP 网络校时、时区转换、毫秒时间戳、JSON 结构化
+3. SKILL.md 改为双路径决策指引；新增快速路径集成测试 `test_native.py`
+
 ## v2026.9.2-beta.1
 
 1. 发布首个版本：`time` skill，获取准确的当前时间

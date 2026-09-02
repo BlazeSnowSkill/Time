@@ -5,7 +5,8 @@
 1. Python 3.9+（skill 运行时仅用标准库，无第三方依赖）
 2. Git
 3. black（Python 代码格式化，默认 88 列）：提交前运行 `black scripts/ tests/`
-4. pytest（仅测试用）：`pip install pytest`
+4. shfmt（shell 脚本格式化，默认风格）：`*.sh` 改动后运行 `shfmt -w scripts/get_time.sh`
+5. pytest（仅测试用）：`pip install pytest`
 
 ## 目录结构
 
@@ -13,8 +14,10 @@
 Time/
 ├── SKILL.md            # skill 入口：frontmatter + Agent 使用指引（发布必需）
 ├── scripts/
-│   ├── get_time.py     # 获取准确时间的 CLI 入口（参数解析 + 流程编排）
-│   └── timelib/        # 共享基础库，按职责拆分
+│   ├── get_time.py     # 精确路径 CLI 入口：NTP 校时 + 参数解析
+│   ├── get_time.sh     # 快速路径：POSIX date 原生取时（Linux/macOS/Git Bash）
+│   ├── get_time.ps1    # 快速路径：PowerShell Get-Date 原生取时（Windows）
+│   └── timelib/        # Python 精确路径共享库，按职责拆分
 │       ├── __init__.py
 │       ├── sources.py     # 校时源：NTP、HTTP Date、回退编排
 │       ├── timezones.py   # 时区解析
@@ -31,6 +34,7 @@ Time/
 │   ├── test_formatting.py
 │   ├── test_timezones.py
 │   ├── test_sources.py
+│   ├── test_native.py     # 快速路径脚本（sh/ps1）集成测试
 │   └── test_cli.py
 ├── README.md           # 项目介绍
 ├── CHANGELOG.md        # 更新日志
@@ -43,7 +47,7 @@ Time/
 
 ## 编码与换行（GBK / UTF-8 注意事项）
 
-1. 所有文本文件一律 UTF-8（无 BOM）、LF 换行；`*.ps1`、`*.bat` 例外保持 CRLF，规则见 `.gitattributes`。
+1. 所有文本文件一律 UTF-8，换行 LF；例外见 `.gitattributes`：`*.ps1`、`*.bat` 保持 CRLF，且 **`*.ps1` 必须带 UTF-8 BOM**——Windows PowerShell 5.1 对无 BOM 脚本按 ANSI（GBK）解析，中文会乱码甚至语法错误。
 2. Windows 管道/重定向下 Python 默认用本地编码（通常 GBK）输出，中文会乱码：脚本入口已调用 `ensure_utf8_stdio()` 强制 UTF-8，新增脚本必须做同样处理。
 3. 交互式控制台下 Python 走 Windows 控制台 API（UTF-8），不受 GBK 影响；如仍见乱码，检查终端代码页（`chcp 65001` 切换）。
 4. 读写文件时显式指定 `encoding="utf-8"`，不要依赖系统默认编码。
@@ -61,7 +65,9 @@ python -m pytest tests/ -v
 ### 手动验证
 
 ```bash
-python scripts/get_time.py                  # 网络校时 + 本地时区
+sh scripts/get_time.sh                      # 快速路径（Linux/macOS/Git Bash）
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/get_time.ps1   # 快速路径（Windows）
+python scripts/get_time.py                  # 精确路径：网络校时 + 本地时区
 python scripts/get_time.py --json           # JSON 输出
 python scripts/get_time.py --timezone UTC   # 指定时区
 python scripts/get_time.py --local-only     # 本地时钟模式
@@ -71,6 +77,8 @@ python scripts/get_time.py --debug          # 查看各校时源失败原因
 Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 
 校时源配置在 `scripts/timelib/sources.py`：`NTP_SERVERS`（UDP 123）、`HTTP_URLS`（HTTPS HEAD 读 Date 头）；本地时钟偏差警告阈值 `CLOCK_WARNING_SECONDS` 在 `scripts/timelib/formatting.py`。沙箱/内网环境 UDP 常被禁，属正常回退路径。
+
+快速路径脚本约束：`get_time.sh` 只用 POSIX strftime 标准格式符（GNU/BSD/BusyBox 通用），单次 `date` 调用取全部字段、少生进程（MSYS 下每个进程创建约 40ms），`LC_ALL=C` 固定英文星期便于映射；输出格式与 `get_time.py` 保持一致，改动需同步更新 `tests/test_native.py`。
 
 ## 发布
 
