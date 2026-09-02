@@ -19,7 +19,7 @@ python scripts/get_time.py --debug
 3. 处理：
    1. 属预期回退路径：脚本自动转用 HTTP Date 头校时，精度约 1 秒，通常够用。
    2. 弱网环境可放宽超时：`--timeout 5`。
-   3. 内网有自建 NTP 服务器时，修改脚本顶部 `NTP_SERVERS`，把内网地址放首位。
+   3. 内网有自建 NTP 服务器时，修改 `scripts/timelib/sources.py` 中的 `NTP_SERVERS`，把内网地址放首位。
 
 ## HTTP 校时失败
 
@@ -36,4 +36,4 @@ HTTP 是最后一道网络校时，它也失败才会回退本地时钟。
 
 ## 自定义校时源
 
-`NTP_SERVERS`、`HTTP_URLS`、单次超时默认值均在 `scripts/get_time.py` 顶部，可按网络环境调整；修改后至少各验证一次成功路径与回退路径。
+`NTP_SERVERS`、`HTTP_URLS`、单次超时默认值均在 `scripts/timelib/sources.py` 顶部，可按网络环境调整；修改后至少各验证一次成功路径与回退路径。

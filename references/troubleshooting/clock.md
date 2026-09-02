@@ -4,7 +4,7 @@
 
 ## 警告的含义
 
-1. 数值为「网络时间 − 本地时钟」，偏差超过 5 秒才告警（阈值 `CLOCK_WARNING_SECONDS` 在脚本顶部）。
+1. 数值为「网络时间 − 本地时钟」，偏差超过 5 秒才告警（阈值 `CLOCK_WARNING_SECONDS` 在 `scripts/timelib/formatting.py`）。
 2. 此时脚本输出的时间已是校准后的网络时间，可放心引用。
 3. 不要再用系统时间命令（`date`、`Get-Date` 等）补充回答，它们读取的是偏差时钟。
 
@@ -22,4 +22,4 @@
 
 ## 调整告警阈值
 
-`CLOCK_WARNING_SECONDS` 位于 `scripts/get_time.py` 顶部，调小更严格、调大减少打扰。JSON 输出中对应字段为 `local_clock_offset_seconds` 与 `clock_accurate`，适合程序化判断。
+`CLOCK_WARNING_SECONDS` 位于 `scripts/timelib/formatting.py` 顶部，调小更严格、调大减少打扰。JSON 输出中对应字段为 `local_clock_offset_seconds` 与 `clock_accurate`，适合程序化判断。

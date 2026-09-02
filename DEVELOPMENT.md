@@ -11,7 +11,13 @@
 Time/
 ├── SKILL.md            # skill 入口：frontmatter + Agent 使用指引（发布必需）
 ├── scripts/
-│   └── get_time.py     # 获取准确时间的主脚本
+│   ├── get_time.py     # 获取准确时间的 CLI 入口（参数解析 + 流程编排）
+│   └── timelib/        # 共享基础库，按职责拆分
+│       ├── __init__.py
+│       ├── sources.py     # 校时源：NTP、HTTP Date、回退编排
+│       ├── timezones.py   # 时区解析
+│       ├── formatting.py  # 结果组装与渲染、偏差告警阈值
+│       └── utf8io.py      # UTF-8 输出处理（GBK 规避）
 ├── references/         # 参考文档（随包发布，按需阅读）
 │   └── troubleshooting/
 │       ├── network.md
@@ -46,7 +52,7 @@ python scripts/get_time.py --debug          # 查看各校时源失败原因
 
 Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 
-校时源配置在 `scripts/get_time.py` 顶部：`NTP_SERVERS`（UDP 123）、`HTTP_URLS`（HTTPS HEAD 读 Date 头）、`CLOCK_WARNING_SECONDS`（本地时钟偏差警告阈值）。沙箱/内网环境 UDP 常被禁，属正常回退路径。
+校时源配置在 `scripts/timelib/sources.py`：`NTP_SERVERS`（UDP 123）、`HTTP_URLS`（HTTPS HEAD 读 Date 头）；本地时钟偏差警告阈值 `CLOCK_WARNING_SECONDS` 在 `scripts/timelib/formatting.py`。沙箱/内网环境 UDP 常被禁，属正常回退路径。
 
 ## 发布
 
@@ -57,4 +63,5 @@ Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 ## 其他约定
 
 1. `AGENTS.md` 为项目最高约定，禁止修改。
-2. Markdown 统一过 markdownlint，配置见 `.markdownlint.jsonc`。
+2. CLI 入口脚本（`scripts/get_time.py`）只做参数解析与流程编排，可复用的实现放入 `scripts/timelib/`，按职责建模块；新增功能同样入口薄、逻辑下沉。
+3. Markdown 统一过 markdownlint，配置见 `.markdownlint.jsonc`。
