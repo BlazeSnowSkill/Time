@@ -76,10 +76,11 @@ Windows 上 `--timezone` 依赖 `tzdata` 包：`pip install tzdata`。
 
 1. 更新 `VERSION`（如 `v2026.9.2.0`）与 `CHANGELOG.md`。
 2. 合并至 `main`，运行 `powershell -File tag.ps1` 创建并推送 `v*` 标签。
-3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`references/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`.github/`、`tag.ps1`、`tests/` 等不会进入发布包。
+3. GitHub Action（`.github/workflows/release.yml`）按白名单打包发布：`SKILL.md`、`scripts/`、`references/`、`README.md`、`CHANGELOG.md`、`LICENSE`、`VERSION`；`DEVELOPMENT.md`、`.github/`、`tag.ps1`、`tests/` 等不会进入发布包。
 
 ## 其他约定
 
 1. `AGENTS.md` 为项目最高约定，禁止修改。
-2. CLI 入口脚本（`scripts/get_time.py`）只做参数解析与流程编排，可复用的实现放入 `scripts/timelib/`，按职责建模块；新增功能同样入口薄、逻辑下沉。
-3. Markdown 统一过 markdownlint，配置见 `.markdownlint.jsonc`。
+2. README.md 面向最终用户，只写功能、使用、安装与环境要求；开发相关内容（本地测试、发布流程、架构约定）一律放本文档——打包时本文档被忽略，README 里的开发链接会成为死链。
+3. CLI 入口脚本（`scripts/get_time.py`）只做参数解析与流程编排，可复用的实现放入 `scripts/timelib/`，按职责建模块；新增功能同样入口薄、逻辑下沉。
+4. Markdown 统一过 markdownlint，配置见 `.markdownlint.jsonc`。

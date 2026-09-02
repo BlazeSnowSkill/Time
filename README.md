@@ -41,13 +41,9 @@ Unix 时间戳：1788032730（秒）/ 1788032730123（毫秒）
 - Python 3.9+，仅标准库，无第三方依赖
 - Windows 上使用 `--timezone` 前需 `pip install tzdata`
 
-## 开发
+## 常见问题
 
-见 [DEVELOPMENT.md](DEVELOPMENT.md)；常见问题（网络校时失败、时区报错、时钟偏差、编码乱码）见 [references/](references/) 下的排障指南。
-
-## 发布
-
-更新 `VERSION` 与 `CHANGELOG.md` 后，合并至 `main` 并运行 `powershell -File tag.ps1` 创建 `v*` 标签，GitHub Action 会自动打包并发布 Release（见 `.github/workflows/release.yml`）。
+排障指南随包附带，见 `references/troubleshooting/`：网络校时失败、时区报错、本地时钟偏差、Python 环境与输出编码。
 
 ## License
 
