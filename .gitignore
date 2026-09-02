@@ -1,2 +1,5 @@
 # 打包目录
 dist/
+
+# Python 缓存
+__pycache__/
