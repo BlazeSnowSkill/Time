@@ -4,20 +4,31 @@
 
 ## 功能
 
-1. **获取准确时间**：NTP 校时（亚秒级精度）→ HTTP Date 头回退（约 1 秒精度）→ 本地时钟兜底，并报告本地时钟偏差。
-2. **时区显示**：`--timezone` 指定任意 IANA 时区。
-3. **结构化输出**：`--json` 输出 ISO 8601、Unix 时间戳、星期等字段。
+1. **快速获取**：系统原生 `date` / `Get-Date` 命令直接输出本地时间，毫秒级、零依赖。
+2. **精确获取**：Python 脚本 NTP 网络校时（亚秒级精度）→ HTTP Date 头回退（约 1 秒精度）→ 本地时钟兜底，并报告本地时钟偏差。
+3. **时区显示**：`--timezone` 指定任意 IANA 时区。
+4. **结构化输出**：`--json` 输出 ISO 8601、Unix 时间戳、星期等字段。
 
 ## 使用
 
 ```bash
-# 当前准确时间（本地时区）
+# 快速：本地时间（毫秒级，零依赖；Linux / macOS / Git Bash）
+sh scripts/get_time.sh
+```
+
+```powershell
+# 快速：Windows PowerShell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/get_time.ps1
+```
+
+```bash
+# 精确：NTP 网络校时 + 本地时区
 python scripts/get_time.py
 
-# 指定时区
+# 精确：指定时区
 python scripts/get_time.py --timezone UTC
 
-# JSON 输出（适合程序解析）
+# 精确：JSON 输出（适合程序解析）
 python scripts/get_time.py --json
 ```
 
@@ -38,8 +49,8 @@ Unix 时间戳：1788032730（秒）/ 1788032730123（毫秒）
 
 ## 环境要求
 
-- Python 3.9+，仅标准库，无第三方依赖
-- Windows 上使用 `--timezone` 前需 `pip install tzdata`
+- 快速路径：零依赖（sh 或 PowerShell 任一）
+- 精确路径：Python 3.9+，仅标准库；Windows 上使用 `--timezone` 前需 `pip install tzdata`
 
 ## 常见问题
 

@@ -19,5 +19,6 @@ Python 版本低于 3.9。用 `python --version` 确认后升级，skill 要求 
 
 ## 依赖说明
 
-1. 校时功能零第三方依赖，仅标准库。
+1. 精确路径零第三方依赖，仅标准库。
 2. 唯一例外：Windows 上使用 `--timezone` 需要 `pip install tzdata`，详见 [timezone.md](timezone.md)。
+3. 环境里完全没有 Python 时，快速路径 `scripts/get_time.sh`（或 `get_time.ps1`）不依赖 Python，仍可获取本地时间；只有 NTP 精确校时需要修复 Python。
